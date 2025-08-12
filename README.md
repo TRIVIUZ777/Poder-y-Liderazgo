@@ -1,1 +1,0 @@
-# Poder-y-Liderazgo
