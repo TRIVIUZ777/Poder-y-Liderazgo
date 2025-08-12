@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poder y Liderazgo en la Psicología Social Comunitaria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Muted Teal -->
+    <!-- Application Structure Plan: A single-page application with a sticky top navigation bar for easy access to thematic sections. The structure is designed for non-linear exploration, allowing users (future teachers) to jump between core concepts (Power, Leadership), critical analysis, a practical case study, and conclusions. Interactive tabs are used to compare different theories of power and leadership without overwhelming the user. A data visualization highlights a key statistic. This thematic, interactive approach was chosen over a linear report format to enhance engagement and facilitate a deeper understanding of how these concepts interconnect in practice. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Types of Power -> Goal: Compare/Inform -> Viz/Method: Interactive tabs -> Interaction: Click to reveal content -> Justification: Allows direct comparison of complex theories in a digestible format. -> Library: Vanilla JS.
+        - Report Info: Leadership Theories -> Goal: Compare/Inform -> Viz/Method: Interactive tabs -> Interaction: Click to reveal content -> Justification: Effective for presenting and contrasting different leadership models. -> Library: Vanilla JS.
+        - Report Info: UNICEF Stat (65% women leaders) -> Goal: Inform/Proportion -> Viz/Method: Donut Chart -> Interaction: Hover for tooltip -> Justification: A donut chart is ideal for showing a clear part-to-whole relationship, making the statistic impactful and easy to grasp. -> Library: Chart.js.
+        - Report Info: Case Study Achievements -> Goal: Inform/Organize -> Viz/Method: Icon-based list -> Interaction: Static display -> Justification: Icons provide quick visual cues, making the achievements more scannable and memorable than a block of text. -> Library/Method: HTML/Tailwind with Unicode characters.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #3D405B;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #81B29A;
+            border-bottom-color: #81B29A;
+        }
+        .tab-btn {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .tab-btn.active {
+            background-color: #81B29A;
+            color: #FFFFFF;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 280px;
+            width: 100%;
+            max-width: 280px;
+        }
+        @media (min-width: 640px) {
+            .chart-container {
+                height: 320px;
+                max-width: 320px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-[#3D405B]">Poder y Liderazgo</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#inicio" class="nav-link px-3 py-2 rounded-md text-sm font-semibold">Inicio</a>
+                        <a href="#poder" class="nav-link px-3 py-2 rounded-md text-sm font-semibold">Poder</a>
+                        <a href="#liderazgo" class="nav-link px-3 py-2 rounded-md text-sm font-semibold">Liderazgo</a>
+                        <a href="#analisis" class="nav-link px-3 py-2 rounded-md text-sm font-semibold">Análisis Crítico</a>
+                        <a href="#caso-practico" class="nav-link px-3 py-2 rounded-md text-sm font-semibold">Caso Práctico</a>
+                        <a href="#conclusiones" class="nav-link px-3 py-2 rounded-md text-sm font-semibold">Conclusiones</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <select id="mobile-nav" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#81B29A] focus:border-[#81B29A] block w-full p-2.5">
+                        <option value="#inicio">Inicio</option>
+                        <option value="#poder">Poder</option>
+                        <option value="#liderazgo">Liderazgo</option>
+                        <option value="#analisis">Análisis Crítico</option>
+                        <option value="#caso-practico">Caso Práctico</option>
+                        <option value="#conclusiones">Conclusiones</option>
+                    </select>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" class="py-16 sm:py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-[#3D405B] sm:text-4xl">Psicología Social Comunitaria</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600 max-w-3xl mx-auto">Esta disciplina analiza las dinámicas de interacción para promover el bienestar colectivo y transformar realidades opresivas. En este marco, el poder y el liderazgo son ejes centrales para comprender cómo las comunidades construyen autonomía, resisten a desigualdades y generan cambios sostenibles, especialmente en el contexto pedagógico de Bolivia.</p>
+            </div>
+        </section>
+
+        <section id="poder" class="py-16 sm:py-20">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-[#3D405B] sm:text-4xl">Explorando el Poder</h2>
+                    <p class="mt-4 text-lg leading-8 text-gray-600 max-w-3xl mx-auto">El poder es la capacidad de influir en otros. En contextos comunitarios, no es un objeto que se posee, sino una red de relaciones que se ejerce de múltiples formas.</p>
+                </div>
+
+                <div class="mt-12 max-w-4xl mx-auto">
+                    <div class="mb-6 flex justify-center space-x-2 sm:space-x-4 p-1 bg-gray-200 rounded-xl">
+                        <button data-tab="poder-coercitivo" class="tab-btn w-full py-2.5 px-1 text-sm sm:text-base font-semibold rounded-lg">Coercitivo</button>
+                        <button data-tab="poder-legitimo" class="tab-btn w-full py-2.5 px-1 text-sm sm:text-base font-semibold rounded-lg">Legítimo</button>
+                        <button data-tab="poder-transformador" class="tab-btn active w-full py-2.5 px-1 text-sm sm:text-base font-semibold rounded-lg">Transformador</button>
+                    </div>
+
+                    <div id="poder-content" class="relative">
+                        <div id="poder-coercitivo" class="tab-content hidden p-6 bg-white rounded-lg shadow-md">
+                            <h3 class="font-bold text-xl text-[#E07A5F]">Poder Coercitivo</h3>
+                            <p class="mt-2 text-gray-700">Se basa en la capacidad de imponer sanciones o castigos. En el aula, se manifiesta cuando un docente utiliza el miedo a las malas notas o los castigos para controlar el comportamiento, reproduciendo una dinámica de autoridad vertical.</p>
+                        </div>
+                        <div id="poder-legitimo" class="tab-content hidden p-6 bg-white rounded-lg shadow-md">
+                            <h3 class="font-bold text-xl text-[#3D405B]">Poder Legítimo</h3>
+                            <p class="mt-2 text-gray-700">Deriva de normas, roles o posiciones aceptadas socialmente. Un ejemplo es el respeto que la comunidad otorga a los líderes indígenas por su sabiduría y servicio, reconociendo su autoridad moral para guiar.</p>
+                        </div>
+                        <div id="poder-transformador" class="tab-content p-6 bg-white rounded-lg shadow-md">
+                            <h3 class="font-bold text-xl text-[#81B29A]">Poder Transformador</h3>
+                            <p class="mt-2 text-gray-700">Busca promover la autonomía, la participación y la capacidad colectiva. Se ejerce en asambleas vecinales donde se deciden proyectos educativos o en aulas donde los estudiantes proponen y lideran sus propios proyectos, como huertos escolares.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="liderazgo" class="py-16 sm:py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-[#3D405B] sm:text-4xl">Dimensiones del Liderazgo</h2>
+                    <p class="mt-4 text-lg leading-8 text-gray-600 max-w-3xl mx-auto">El liderazgo es el proceso de guiar y motivar a una comunidad hacia objetivos comunes, combinando habilidades sociales, éticas y estratégicas.</p>
+                </div>
+                
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl text-[#3D405B] mb-4">Funciones Clave en Educación</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3 text-[#81B29A]">🤝</span>
+                                <div><strong class="block">Facilitador de diálogo:</strong> Media conflictos y construye consensos entre padres, docentes y estudiantes.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3 text-[#E07A5F]">🌱</span>
+                                <div><strong class="block">Guardián de saberes:</strong> Preserva y integra conocimientos ancestrales (lengua, agricultura) en el currículo escolar.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3 text-[#F2CC8F]">🚀</span>
+                                <div><strong class="block">Agente de cambio:</strong> Moviliza recursos y personas para mejorar la infraestructura o impulsar proyectos productivos.</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl text-[#3D405B] mb-4">Enfoques del Liderazgo</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Liderazgo Indígena</h4>
+                                <p class="text-sm text-gray-600">Basado en principios como el <strong class="text-[#81B29A]">ayni</strong> (reciprocidad) y el consenso. Suele ser colectivo y rotativo, donde el servicio a la comunidad es el valor principal.</p>
+                            </div>
+                            <hr>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Liderazgo Distribuido</h4>
+                                <p class="text-sm text-gray-600">El liderazgo no reside en una sola persona, sino en las interacciones del colectivo. Un ejemplo son los comités escolares de El Alto, donde varias personas comparten la responsabilidad.</p>
+                            </div>
+                             <hr>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Liderazgo Situacional</h4>
+                                <p class="text-sm text-gray-600">Adapta el estilo (directivo, participativo, etc.) según la madurez y las necesidades del grupo en un momento específico.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="analisis" class="py-16 sm:py-20">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-[#3D405B] sm:text-4xl">Análisis Crítico</h2>
+                    <p class="mt-4 text-lg leading-8 text-gray-600 max-w-3xl mx-auto">La escuela puede ser un espacio tanto de reproducción de desigualdades como de emancipación. Analizar el poder y el liderazgo nos permite ver estas dinámicas.</p>
+                </div>
+                <div class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="font-bold text-xl text-[#E07A5F]">Reproducción de Desigualdades</h3>
+                        <p class="mt-2 text-gray-700">Las escuelas a menudo ejercen un <strong class="text-[#E07A5F]">poder simbólico</strong> (Bourdieu) al marginalizar lenguas y saberes indígenas. El "modelo bancario" de educación (Freire), donde el docente "deposita" conocimiento, refuerza estas jerarquías.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="font-bold text-xl text-[#81B29A]">Experiencias Emancipadoras</h3>
+                        <p class="mt-2 text-gray-700">Proyectos como la <strong class="text-[#81B29A]">escuela-ayllu de Warisata</strong> (1931) democratizaron el poder al integrar líderes indígenas en la gestión educativa. Hoy, las escuelas autónomas zapatistas son un ejemplo de cómo los estudiantes pueden decidir sus propios contenidos.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <h3 class="font-bold text-xl text-[#3D405B]">Liderazgo y Género</h3>
+                        <p class="mt-2 text-gray-700">En El Alto, las mujeres lideran activamente, pero enfrentan estereotipos. Un dato clave revela su rol fundamental:</p>
+                        <div class="chart-container mt-4">
+                            <canvas id="genderChart"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">Fuente: UNICEF Bolivia, 2022</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="caso-practico" class="py-16 sm:py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-[#3D405B] sm:text-4xl">Caso Práctico: Liderazgo en El Alto</h2>
+                    <p class="mt-4 text-lg leading-8 text-gray-600 max-w-3xl mx-auto">La Junta Escolar de Villa Esperanza, en el distrito 14 de El Alto, es un ejemplo concreto de liderazgo comunitario transformador organizado por padres de familia.</p>
+                </div>
+                <div class="mt-12 max-w-4xl mx-auto bg-gray-50 p-8 rounded-xl shadow-lg">
+                    <h3 class="font-bold text-2xl text-center text-[#3D405B]">Logros de la Junta Escolar</h3>
+                    <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl">🧱</span>
+                            <h4 class="font-semibold mt-2">Nuevas Aulas</h4>
+                            <p class="text-sm text-gray-600">Gestionaron la construcción de aulas utilizando materiales reciclados.</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl">📚</span>
+                            <h4 class="font-semibold mt-2">Educación Bilingüe</h4>
+                            <p class="text-sm text-gray-600">Implementaron talleres de educación intercultural quechua-castellano.</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl">🌟</span>
+                            <h4 class="font-semibold mt-2">Becas Rotativas</h4>
+                            <p class="text-sm text-gray-600">Establecieron un sistema de becas para niños en situación de pobreza extrema.</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <h4 class="font-bold text-xl text-center text-[#81B29A]">Claves del Éxito</h4>
+                        <div class="mt-4 flex flex-col md:flex-row justify-center gap-6">
+                            <p class="text-center text-gray-700"><strong class="text-[#81B29A]">Liderazgo Rotativo:</strong> Cada mes, un miembro diferente coordina los proyectos, distribuyendo la responsabilidad.</p>
+                            <p class="text-center text-gray-700"><strong class="text-[#81B29A]">Alianzas Estratégicas:</strong> Colaboraron con ONGs para recibir capacitación en pedagogía crítica y derechos indígenas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusiones" class="py-16 sm:py-20 bg-[#3D405B] text-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                 <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Conclusiones y Recomendaciones</h2>
+                 <p class="mt-4 text-lg leading-8 text-gray-300 max-w-3xl mx-auto">Para los futuros docentes, el desafío es ejercer un poder pedagógico emancipador.</p>
+                 <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                    <div class="bg-white/10 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl text-[#F2CC8F]">Conclusiones Clave</h3>
+                        <ul class="mt-4 space-y-2 list-disc list-inside text-gray-200">
+                            <li>El poder en la educación debe ser redistributivo, no concentrado.</li>
+                            <li>El liderazgo efectivo combina saberes ancestrales con herramientas modernas.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white/10 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl text-[#F2CC8F]">Recomendaciones</h3>
+                         <ul class="mt-4 space-y-2 list-disc list-inside text-gray-200">
+                            <li>Recordar que liderar es servir con sabiduría, no mandar.</li>
+                            <li>Convertir el aula en un territorio de democracia y esperanza activa.</li>
+                        </ul>
+                    </div>
+                 </div>
+                 <p class="mt-10 text-sm text-gray-400">"El liderazgo comunitario no es mandar, es servir con sabiduría y escuchar hasta al más pequeño."</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-xs">
+            <p>Informe sobre Poder y Liderazgo - ESFM Tecnológico y Humanístico El Alto</p>
+            <p>Gestión 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const powerContents = document.querySelectorAll('#poder-content .tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    powerContents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+
+                    const activeContent = document.getElementById(tab.dataset.tab);
+                    if (activeContent) {
+                        activeContent.classList.remove('hidden');
+                    }
+                });
+            });
+
+            const genderCtx = document.getElementById('genderChart').getContext('2d');
+            new Chart(genderCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Liderados por Mujeres', 'Otros'],
+                    datasets: [{
+                        label: 'Liderazgo en Comités de Madres',
+                        data: [65, 35],
+                        backgroundColor: [
+                            '#81B29A',
+                            '#E0E0E0'
+                        ],
+                        borderColor: [
+                            '#FFFFFF',
+                            '#FFFFFF'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#3D405B',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw}%`;
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Comités de madres en escuelas públicas',
+                            color: '#3D405B',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            });
+
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.addEventListener('change', (event) => {
+                window.location.href = event.target.value;
+            });
+            
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>
